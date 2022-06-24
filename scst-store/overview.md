@@ -1,41 +1,25 @@
-# Supply Chain Security Tools for VMware Tanzu – Store
+# Supply Chain Security Tools for Tanzu – Store
 
-Supply Chain Security Tools - Store’s identifies vulnerable software packages by providing a CLI to query image, package, and vulnerability relationships after Supply Chain Security Tools - Scan runs source code and image vulnerability scans.
-​
-The Supply Chain Security Tools - Store component is designed to integrate seamlessly with the [Supply Chain Security Tools - Scan component](../scst-scan/overview.md). 
-​
-The Supply Chain Security Tools - Store has four components:
+Supply Chain Security Tools - Store saves software bills of materials (SBoMs) to a database and allows you to query for image, source code, package, and vulnerability relationships.  It integrates with [Supply Chain Security Tools - Scan](../scst-scan/overview.md) to automatically store the resulting source code and image vulnerability reports. It accepts CycloneDX input and outputs in both human-readable and machine-readable formats, including JSON, text, and CycloneDX.
 
-* Postgres database
-* API
-* client library
-* CLI
 
-Currently, there is support for the Cyclone DX XML SBoM formats.
+The following is a quick demo of configuring the tanzu insight plug-in and querying the metadata store for CVEs and scan results.
 
-See the following pages to begin:
+<iframe width="480" height="270"
+src="https://www.youtube.com/embed/qBBv3YKwH2E"
+frameborder="0" allow="autoplay; encrypted-media" allowfullscreen
+alt="A demonstration of the tanzu insight cli plug-in. Querying for the supply chain scan results and vulnerabilities stored in the metadata store."></iframe>
 
-* [TAP instructions for installing packages](../install.md#install-scst-store)
-* [Using Supply Chain Security Tools - Store](using_metadata_store.md)
+## Using the Tanzu Insight CLI plug-in
 
-## Installed Resources
+the Tanzu Insight CLI plug-in is the primary way to view results from the Supply Chain Security Tools - Scan of source code and image files.  Use it to query by source code commit, image digest, and CVE identifier to understand security risks.  
 
-The installation will create the following in your Kubernetes cluster:
+See [Tanzu Insight plug-in overview](../cli-plugins/insight/cli-overview.md) to install, configure, and use `tanzu insight`.
 
-* 2 components — an API backend, and a database. Each component includes:
-    * service
-    * deployment
-    * replicaset
-    * pod
-* Persistent volume, and persistent volume claim.
-* External IP (if you've [customized the deployment configuration](../install.md#install-scst-store) to use `LoadBalancer`).
-* A Kubernetes secret to allow pulling Supply Chain Security Tools - Store images from a registry.
-* A namespace called `metadata-store`.
+## Multicluster configuration
 
-# CLI
+See [Ingress and multicluster support](ingress-multicluster.md) for information about how to set up Supply Chain Security Tools Scan and Store to work together in a multicluster setup.
 
-See [CLI](cli.md).
+## <a id='additional-info'></a>Additional documentation
 
-# Known Issues
-
-See [Troubleshooting and Known Issues](known_issues.md).
+[Additional documentation](additional.md) includes information about the API, deployment details and configuration, AWS RDS configuration, other database backup recommendations, known issues, and other topics.

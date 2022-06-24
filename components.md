@@ -1,32 +1,45 @@
-# <a id='components'></a> Component Documentation
+# Component documentation
 
-Documentation for the components of Tanzu Application Platform is available as follows.
+Documentation for some of the components of Tanzu Application Platform is
+available as follows.
 
-Some of the documentation is hosted on separate sites and some is incorporated into this 
-Tanzu Application Platform documentation site.
+Some of the documentation is hosted on separate sites and some is incorporated
+into this Tanzu Application Platform documentation site.
 
-+ API portal
+- [API portal for VMware Tanzu](https://docs.pivotal.io/api-portal)
 
-+ [Application Accelerator for VMware Tanzu](https://docs.vmware.com/en/Application-Accelerator-for-VMware-Tanzu/index.html)
+- [Application Accelerator for VMware Tanzu](https://docs.vmware.com/en/Application-Accelerator-for-VMware-Tanzu/index.html)
 
-+ [Application Live View for VMware Tanzu](https://docs.vmware.com/en/Application-Live-View-for-VMware-Tanzu/0.1/docs/GUID-index.html)
+- [Application Live View for VMware Tanzu](app-live-view/about-app-live-view.md)
 
-+ [Cloud Native Runtimes for VMware Tanzu](https://docs.vmware.com/en/Cloud-Native-Runtimes-for-VMware-Tanzu/1.0/tanzu-cloud-native-runtimes-1-0/GUID-cnr-overview.html)
+- [Application Live View Convention Service for VMware Tanzu](app-live-view/configuring-apps/convention-server.md)
 
-+ Convention Service for VMware Tanzu
+- [Application Single Sign-On for VMware Tanzu](app-sso/about.md)
 
-+ SCP Toolkit
+- [Authentication and Authorization](authn-authz/overview.md)
 
-+ Service Bindings for Kubernetes
+- [Cloud Native Runtimes for VMware Tanzu](https://docs.vmware.com/en/Cloud-Native-Runtimes-for-VMware-Tanzu/index.html)
 
-+ [Supply Chain Choreographer for VMware Tanzu](scc/about.html)
+- [Convention Service for VMware Tanzu](convention-service/about.md)
 
-+ [Supply Chain Security Tools - Scan](scst-scan/overview.md)
+- [Learning Center for Tanzu Application Platform](learning-center/about.md)
 
-+ Supply Chain Security Tools - Sign
+- [Services Toolkit](https://docs.vmware.com/en/Services-Toolkit-for-VMware-Tanzu-Application-Platform/index.html)
 
-+ Supply Chain Security Tools - Store
+- [Supply Chain Choreographer for VMware Tanzu](scc/about.html)
 
-+ Tanzu Source Controller
+- [Supply Chain Security Tools - Scan](scst-scan/overview.md)
 
-+ [VMware Tanzu Build Service](https://docs.pivotal.io/build-service)
+- [Supply Chain Security Tools - Sign (Deprecated)](scst-sign/overview.md)
+
+- [Supply Chain Security Tools - Policy Controller](scst-policy/overview.md)
+
+- [Supply Chain Security Tools - Store](scst-store/overview.md)
+
+- [Tanzu Developer Tools for Visual Studio Code](vscode-extension/about.md)
+
+- [Tanzu Application Platform GUI](tap-gui/about.md)
+
+- [VMware Tanzu Build Service](https://docs.vmware.com/en/VMware-Tanzu-Build-Service/index.html)
+
+- [Workload types](workloads/workload-types.md)

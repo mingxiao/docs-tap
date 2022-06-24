@@ -1,397 +1,403 @@
+# API details
 
+See [API walkthrough](api-walkthrough.md) for a walkthrough and example.
 
+## <a id='info'></a>Information
 
-# Metadata Store API.
-  
-
-## Informations
-
-### Version
+### <a id='methods'></a>Version
 
 0.0.1
 
-## Content negotiation
+## <a id='con-nego'></a>Content negotiation
 
-### URI Schemes
-  * http
-  * https
+### <a id='uri-schemes'></a>URI Schemes
+* http
+* https
 
-### Consumes
-  * application/json
+### <a id='consumes'></a>Consumes
+* application/json
 
-### Produces
-  * application/json
+### <a id='produce'></a>Produces
+* application/json
 
-## All endpoints
+## <a id='all-endpoints'></a>All endpoints
 
-###  images
+###  <a id='images'></a>images
 
 | Method  | URI     | Name   | Summary |
 |---------|---------|--------|---------|
 | POST | /api/imageReport | [create image report](#create-image-report) | Create a new image report. Related packages and vulnerabilities are also created. |
 | GET | /api/images | [get images](#get-images) | Search image by id or digest. |
-| GET | /api/packages/{IDorName}/images | [get package images](#get-package-images) | List the images that contain the given package. |
-| GET | /api/vulnerabilities/{CVEID}/images | [get vulnerability images](#get-vulnerability-images) | List the images that contain the given vulnerability. |
-  
+| GET | /api/packages/{IDorName}/images | [get package images](#gpi) | List the images that contain the given package. |
+| GET | /api/vulnerabilities/{CVEID}/images | [get vulnerability images](#gvi) | List the images that contain the given vulnerability. |
 
 
-###  packages
 
-| Method  | URI     | Name   | Summary |
-|---------|---------|--------|---------|
-| GET | /api/images/{IDorDigest}/packages | [get image packages](#get-image-packages) | List the packages in an image. |
-| GET | /api/packages | [get packages](#get-packages) | Search packages by id, name and/or version. |
-| GET | /api/sources/{IDorRepoorSha}/packages | [get source packages](#get-source-packages) |  |
-| GET | /api/sources/packages | [get source packages query](#get-source-packages-query) | List packages of the given source. |
-| GET | /api/vulnerabilities/{CVEID}/packages | [get vulnerability packages](#get-vulnerability-packages) | List packages that contain the given CVE id. |
-  
-
-
-###  sources
+###  <a id='operations'></a>Operations
 
 | Method  | URI     | Name   | Summary |
 |---------|---------|--------|---------|
-| POST | /api/sourceReport | [create source report](#create-source-report) | Create a new source report. Related packages and vulnerabilities are also created. |
-| GET | /api/packages/{IDorName}/sources | [get package sources](#get-package-sources) | List the sources containing the given package. |
-| GET | /api/sources | [get sourcs](#get-sourcs) | Search for sources by ID, repository, commit sha and/or organization. |
-| GET | /api/vulnerabiltities/{CVEID}/sources | [get vulnerability sources](#get-vulnerability-sources) | List sources that contain the given vulnerability. |
-  
+| GET | /api/health | [health check](#health-check) |  |
 
 
-###  vulnerabilities
+
+###  <a id='packages'></a>Packages
 
 | Method  | URI     | Name   | Summary |
 |---------|---------|--------|---------|
-| GET | /api/images/{IDorDigest}/vulnerabilities | [get image vulnerabilities](#get-image-vulnerabilities) | List vulnerabilities from the given image. |
-| GET | /api/packages/{IDorName}/vulnerabilities | [get package vulnerabilities](#get-package-vulnerabilities) | List vulnerabilities from the given package. |
-| GET | /api/sources/{IDorRepoorSha}/vulnerabilitites | [get source vulnerabilities](#get-source-vulnerabilities) |  |
-| GET | /api/sources/vulnerabilitites | [get source vulnerabilities query](#get-source-vulnerabilities-query) | List vulnerabilities of the given source. |
-| GET | /api/vulnerabilities | [get vulnerabilities](#get-vulnerabilities) | Search for vulnerabilities by CVE id. |
-  
+| GET | /api/images/{IDorDigest}/packages | [get image packages](#gip) | List the packages in an image. |
+| GET | /api/packages | [get packages](#gp) | Search packages by id, name and/or version. |
+| GET | /api/sources/{IDorRepoorSha}/packages | [get source packages](#gsp) |  |
+| GET | /api/sources/packages | [get source packages query](#gspq) | List packages of the given source. |
+| GET | /api/vulnerabilities/{CVEID}/packages | [get vulnerability packages](#gvp) | List packages that contain the given CVE id. |
 
 
-## Paths
 
-### <span id="create-image-report"></span> Create a new image report. Related packages and vulnerabilities are also created. (*CreateImageReport*)
+###  <a id='sources'></a>Sources
 
-```
+| Method  | URI     | Name   | Summary |
+|---------|---------|--------|---------|
+| POST | /api/sourceReport | [create source report](#create-sr) | Create a new source report. Related packages and vulnerabilities are also created. |
+| GET | /api/packages/{IDorName}/sources | [get package sources](#gps) | List the sources containing the given package. |
+| GET | /api/sources | [get sources](#get-sources) | Search for sources by ID, repository, commit sha and/or organization. |
+| GET | /api/vulnerabilities/{CVEID}/sources | [get vulnerability sources](#gvs) | List sources that contain the given vulnerability. |
+
+
+
+###  <a id='vulnerabilities'></a>Vulnerabilities
+
+| Method  | URI     | Name   | Summary |
+|---------|---------|--------|---------|
+| GET | /api/images/{IDorDigest}/vulnerabilities | [get image vulnerabilities](#giv) | List vulnerabilities from the given image. |
+| GET | /api/packages/{IDorName}/vulnerabilities | [get package vulnerabilities](#gpv) | List vulnerabilities from the given package. |
+| GET | /api/sources/{IDorRepoorSha}/vulnerabilities | [get source vulnerabilities](#gsv) |  |
+| GET | /api/sources/vulnerabilities | [get source vulnerabilities query](#gsvq) | List vulnerabilities of the given source. |
+| GET | /api/vulnerabilities | [get vulnerabilities](#gv) | Search for vulnerabilities by CVE id. |
+
+
+
+## <a id='paths'></a>Paths
+
+### <a id="cir"></a> Create a new image report. Related packages and vulnerabilities are also created. (*CreateImageReport*)
+
+```console
 POST /api/imageReport
 ```
 
-#### Parameters
+#### <a id='parameters-cir'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | Image | `body` | [Image](#image) | `models.Image` | | ✓ | |  |
 
-#### All responses
+#### <a id='all-responses-cir'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#create-image-report-200) | OK | Image |  | [schema](#create-image-report-200-schema) |
-| [default](#create-image-report-default) | | ErrorMessage |  | [schema](#create-image-report-default-schema) |
+| [200](#create-im-rpt-200) | OK | Image |  | [schema](#create-im-rpt-200-schema) |
+| [default](#create-im-rpt-default) | | ErrorMessage |  | [schema](#create-im-rpt-default-schema) |
 
-#### Responses
+#### <a id='responses-cir'></a>Responses
 
 
-##### <span id="create-image-report-200"></span> 200 - Image
+##### <a id="create-im-rpt-200"></a> 200 - Image
 Status: OK
 
-###### <span id="create-image-report-200-schema"></span> Schema
-   
-  
+###### <a id="create-im-rpt-200-schema"></a> Schema
+
+
 
 [Image](#image)
 
-##### <span id="create-image-report-default"></span> Default Response
+##### <a id="create-im-rpt-default"></a> Default Response
 ErrorMessage
 
-###### <span id="create-image-report-default-schema"></span> Schema
+###### <a id="create-im-rpt-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="create-source-report"></span> Create a new source report. Related packages and vulnerabilities are also created. (*CreateSourceReport*)
+### <a id="create-sr"></a> Create a new source report. Related packages and vulnerabilities are also created. (*CreateSourceReport*)
 
-```
+```console
 POST /api/sourceReport
 ```
 
-#### Parameters
+#### <a id='parameters-csr'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | Image | `body` | [Source](#source) | `models.Source` | | ✓ | |  |
 
-#### All responses
+#### <a id='all-responses-csr'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#create-source-report-200) | OK | Source |  | [schema](#create-source-report-200-schema) |
-| [default](#create-source-report-default) | | ErrorMessage |  | [schema](#create-source-report-default-schema) |
+| [200](#create-srce-rpt-200) | OK | Source |  | [schema](#create-srce-rpt-200-schema) |
+| [default](#create-srce-rpt-def) | | ErrorMessage |  | [schema](#create-srce-rpt-def-schema) |
 
-#### Responses
+#### <a id='responses-csr'></a>Responses
 
 
-##### <span id="create-source-report-200"></span> 200 - Source
+##### <a id="create-srce-rpt-200"></a> 200 - Source
 Status: OK
 
-###### <span id="create-source-report-200-schema"></span> Schema
-   
-  
+###### <a id="create-srce-rpt-200-schem"></a> Schema
+
+
 
 [Source](#source)
 
-##### <span id="create-source-report-default"></span> Default Response
+##### <a id="cr-source-rpt-def"></a> Default Response
 ErrorMessage
 
-###### <span id="create-source-report-default-schema"></span> Schema
+###### <a id="cr-source-rpt-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-image-packages"></span> List the packages in an image. (*GetImagePackages*)
+### <a id="gip"></a> List the packages in an image. (*GetImagePackages*)
 
-```
+```console
 GET /api/images/{IDorDigest}/packages
 ```
 
-#### Parameters
+#### <a id='parameters-gip'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | IDorDigest | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gip'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-image-packages-200) | OK | Package |  | [schema](#get-image-packages-200-schema) |
-| [default](#get-image-packages-default) | | ErrorMessage |  | [schema](#get-image-packages-default-schema) |
+| [200](#get-im-packages-200) | OK | Package |  | [schema](#get-im-packages-200-schema) |
+| [default](#get-im-packages-def) | | ErrorMessage |  | [schema](#get-im-packages-def-schema) |
 
-#### Responses
+#### <a id='responses-gip'></a>Responses
 
 
-##### <span id="get-image-packages-200"></span> 200 - Package
+##### <a id="get-im-packages-200"></a> 200 - Package
 Status: OK
 
-###### <span id="get-image-packages-200-schema"></span> Schema
-   
-  
+###### <a id="get-im-pckgs-200-schema"></a> Schema
+
+
 
 [][Package](#package)
 
-##### <span id="get-image-packages-default"></span> Default Response
+##### <a id="get-im-pckgs-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-image-packages-default-schema"></span> Schema
+###### <a id="get-ime-pckgs-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-image-vulnerabilities"></span> List vulnerabilities from the given image. (*GetImageVulnerabilities*)
+### <a id="giv"></a> List vulnerabilities from the given image. (*GetImageVulnerabilities*)
 
-```
+```console
 GET /api/images/{IDorDigest}/vulnerabilities
 ```
 
-#### Parameters
+#### <a id='parameters-giv'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | IDorDigest | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-giv'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-image-vulnerabilities-200) | OK | Vulnerability |  | [schema](#get-image-vulnerabilities-200-schema) |
-| [default](#get-image-vulnerabilities-default) | | ErrorMessage |  | [schema](#get-image-vulnerabilities-default-schema) |
+| [200](#get-image-vul-200) | OK | Vulnerability |  | [schema](#get-image-vul-200-schema) |
+| [default](#get-image-vul-def) | | ErrorMessage |  | [schema](#get-image-vul-def-schema) |
 
-#### Responses
+#### <a id='responses-giv'></a>Responses
 
 
-##### <span id="get-image-vulnerabilities-200"></span> 200 - Vulnerability
+##### <a id="get-image-vul-200"></a> 200 - Vulnerability
 Status: OK
 
-###### <span id="get-image-vulnerabilities-200-schema"></span> Schema
-   
-  
+###### <a id="get-image-vul-200-schema"></a> Schema
+
+
 
 [][Vulnerability](#vulnerability)
 
-##### <span id="get-image-vulnerabilities-default"></span> Default Response
+##### <a id="get-image-vul-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-image-vulnerabilities-default-schema"></span> Schema
+###### <a id="get-im-vul-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-images"></span> Search image by id or digest. (*GetImages*)
+### <a id="get-images"></a> Search image by id or digest. (*GetImages*)
 
-```
+```console
 GET /api/images
 ```
 
-#### Parameters
+#### <a id='parameters-gi'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | digest | `query` | string | `string` |  |  |  |  |
 | id | `query` | int64 (formatted integer) | `int64` |  |  |  |  |
 
-#### All responses
+#### <a id='all-responses-GI'></a> responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
 | [200](#get-images-200) | OK | Image |  | [schema](#get-images-200-schema) |
 | [default](#get-images-default) | | ErrorMessage |  | [schema](#get-images-default-schema) |
 
-#### Responses
+#### <a id='responses-gi'></a>Responses
 
 
-##### <span id="get-images-200"></span> 200 - Image
+##### <a id="get-images-200"></a> 200 - Image
 Status: OK
 
-###### <span id="get-images-200-schema"></span> Schema
-   
-  
+###### <a id="get-images-200-schema"></a> Schema
+
+
 
 [Image](#image)
 
-##### <span id="get-images-default"></span> Default Response
+##### <a id="get-images-default"></a> Default Response
 ErrorMessage
 
-###### <span id="get-images-default-schema"></span> Schema
+###### <a id="get-images-default-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-package-images"></span> List the images that contain the given package. (*GetPackageImages*)
+### <a id="gpi"></a> List the images that contain the given package. (*GetPackageImages*)
 
-```
+```console
 GET /api/packages/{IDorName}/images
 ```
 
-#### Parameters
+#### <a id='parameters-gpi'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | IDorName | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses5'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-package-images-200) | OK | Image |  | [schema](#get-package-images-200-schema) |
-| [default](#get-package-images-default) | | ErrorMessage |  | [schema](#get-package-images-default-schema) |
+| [200](#get-pckg-im-200) | OK | Image |  | [schema](#get-pckg-im-200-schema) |
+| [default](#get-pckg-im-def) | | ErrorMessage |  | [schema](#get-pckg-im-def-schema) |
 
-#### Responses
+#### <a id='responses-gpi'></a>Responses
 
 
-##### <span id="get-package-images-200"></span> 200 - Image
+##### <a id="get-pckg-im-200"></a> 200 - Image
 Status: OK
 
-###### <span id="get-package-images-200-schema"></span> Schema
-   
-  
+###### <a id="get-pckg-im-200-schema"></a> Schema
+
+
 
 [][Image](#image)
 
-##### <span id="get-package-images-default"></span> Default Response
+##### <a id="get-pckg-im-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-package-images-default-schema"></span> Schema
+###### <a id="get-pckg-im-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-package-sources"></span> List the sources containing the given package. (*GetPackageSources*)
+### <a id="gps"></a> List the sources containing the given package. (*GetPackageSources*)
 
-```
+```console
 GET /api/packages/{IDorName}/sources
 ```
 
-#### Parameters
+#### <a id='parameters-gps'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | IDorName | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gps'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-package-sources-200) | OK | Source |  | [schema](#get-package-sources-200-schema) |
-| [default](#get-package-sources-default) | | ErrorMessage |  | [schema](#get-package-sources-default-schema) |
+| [200](#get-pckg-sources-200) | OK | Source |  | [schema](#get-pckg-sources-200-schema) |
+| [default](#get-pckg-sources-def) | | ErrorMessage |  | [schema](#get-pckg-sources-def-schema) |
 
-#### Responses
+#### <a id='responses-gps'></a>Responses
 
 
-##### <span id="get-package-sources-200"></span> 200 - Source
+##### <a id="get-pckg-sources-200"></a> 200 - Source
 Status: OK
 
-###### <span id="get-package-sources-200-schema"></span> Schema
-   
-  
+###### <a id="get-pckg-srce-200-schema"></a> Schema
+
+
 
 [][Source](#source)
 
-##### <span id="get-package-sources-default"></span> Default Response
+##### <a id="get-pckg-srce-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-package-sources-default-schema"></span> Schema
+###### <a id="get-pckg-srce-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-package-vulnerabilities"></span> List vulnerabilities from the given package. (*GetPackageVulnerabilities*)
+### <a id="gpv"></a> List vulnerabilities from the given package. (*GetPackageVulnerabilities*)
 
-```
+```console
 GET /api/packages/{IDorName}/vulnerabilities
 ```
 
-#### Parameters
+#### <a id='parameters-gpv'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | IDorName | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gpv'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-package-vulnerabilities-200) | OK | Vulnerability |  | [schema](#get-package-vulnerabilities-200-schema) |
-| [default](#get-package-vulnerabilities-default) | | ErrorMessage |  | [schema](#get-package-vulnerabilities-default-schema) |
+| [200](#get-pckg-vul-200) | OK | Vulnerability |  | [schema](#get-pckg-vul-200-schema) |
+| [default](#get-pckg-vul-default) | | ErrorMessage |  | [schema](#get-pckg-vul-def-schema) |
 
-#### Responses
+#### <a id='responses-gpv'></a>Responses
 
 
-##### <span id="get-package-vulnerabilities-200"></span> 200 - Vulnerability
+##### <a id="get-pckg-vul-200"></a> 200 - Vulnerability
 Status: OK
 
-###### <span id="get-package-vulnerabilities-200-schema"></span> Schema
-   
-  
+###### <a id="get-pckg-v-200-schema"></a> Schema
+
+
 
 [][Vulnerability](#vulnerability)
 
-##### <span id="get-package-vulnerabilities-default"></span> Default Response
+##### <a id="get-pckg-vul-default"></a> Default Response
 ErrorMessage
 
-###### <span id="get-package-vulnerabilities-default-schema"></span> Schema
+###### <a id="get-pckg-vul-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-packages"></span> Search packages by id, name and/or version. (*GetPackages*)
+### <a id="gp"></a> Search packages by id, name and/or version. (*GetPackages*)
 
-```
+```console
 GET /api/packages
 ```
 
-#### Parameters
+#### <a id='parameters-gp'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
@@ -399,79 +405,79 @@ GET /api/packages
 | name | `query` | string | `string` |  |  |  | Any of id or name must be provided |
 | version | `query` | string | `string` |  |  |  |  |
 
-#### All responses
+#### <a id='all-responses-gp'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-packages-200) | OK | Package |  | [schema](#get-packages-200-schema) |
-| [default](#get-packages-default) | | ErrorMessage |  | [schema](#get-packages-default-schema) |
+| [200](#get-pckg-200) | OK | Package |  | [schema](#get-pckg-200-schema) |
+| [default](#get-pckg-default) | | ErrorMessage |  | [schema](#get-pckg-default-schema) |
 
-#### Responses
+#### <a id='responses-gp'></a>Responses
 
 
-##### <span id="get-packages-200"></span> 200 - Package
+##### <a id="get-pckg-200"></a> 200 - Package
 Status: OK
 
-###### <span id="get-packages-200-schema"></span> Schema
-   
-  
+###### <a id="get-pckg-200-schema"></a> Schema
+
+
 
 [][Package](#package)
 
-##### <span id="get-packages-default"></span> Default Response
+##### <a id="get-packages-default"></a> Default Response
 ErrorMessage
 
-###### <span id="get-packages-default-schema"></span> Schema
+###### <a id="get-pckg-default-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-source-packages"></span> get source packages (*GetSourcePackages*)
+### <a id="gsp"></a> get source packages (*GetSourcePackages*)
 
-```
+```console
 GET /api/sources/{IDorRepoorSha}/packages
 ```
 
-#### Parameters
+#### <a id='parameters-gsp'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | IDorRepoorSha | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gsp'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-source-packages-200) | OK | Package |  | [schema](#get-source-packages-200-schema) |
-| [default](#get-source-packages-default) | | ErrorMessage |  | [schema](#get-source-packages-default-schema) |
+| [200](#get-srce-pckg-200) | OK | Package |  | [schema](#get-srce-pckg-200-schema) |
+| [default](#get-srce-pckg-def) | | ErrorMessage |  | [schema](#get-srce-pckg-def-schema) |
 
-#### Responses
+#### <a id='responses-gsp'></a>Responses
 
 
-##### <span id="get-source-packages-200"></span> 200 - Package
+##### <a id="get-srce-pckg-200"></a> 200 - Package
 Status: OK
 
-###### <span id="get-source-packages-200-schema"></span> Schema
-   
-  
+###### <a id="get-srce-pckg-200-schema"></a> Schema
+
+
 
 [][Package](#package)
 
-##### <span id="get-source-packages-default"></span> Default Response
+##### <a id="get-srce-pckg-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-source-packages-default-schema"></span> Schema
+###### <a id="get-srce-pckg-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-source-packages-query"></span> List packages of the given source. (*GetSourcePackagesQuery*)
+### <a id="gspq"></a> List packages of the given source. (*GetSourcePackagesQuery*)
 
-```
+```console
 GET /api/sources/packages
 ```
 
-#### Parameters
+#### <a id='parameters-gspq'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
@@ -479,79 +485,79 @@ GET /api/sources/packages
 | repo | `query` | string | `string` |  |  |  |  |
 | sha | `query` | string | `string` |  |  |  |  |
 
-#### All responses
+#### <a id='all-responses-gspq'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-source-packages-query-200) | OK | Package |  | [schema](#get-source-packages-query-200-schema) |
-| [default](#get-source-packages-query-default) | | ErrorMessage |  | [schema](#get-source-packages-query-default-schema) |
+| [200](#get-srce-pckg-que-200) | OK | Package |  | [schema](#getsrcepckgque-200-schema) |
+| [default](#get-srce-pckg-que-def) | | ErrorMessage |  | [schema](#getsrcepckgque-def-schema) |
 
-#### Responses
+#### <a id='responses-gspq'></a>Responses
 
 
-##### <span id="get-source-packages-query-200"></span> 200 - Package
+##### <a id="get-srce-pckg-que-200"></a> 200 - Package
 Status: OK
 
-###### <span id="get-source-packages-query-200-schema"></span> Schema
-   
-  
+###### <a id="getsrcepckgque-200-schema"></a> Schema
+
+
 
 [][Package](#package)
 
-##### <span id="get-source-packages-query-default"></span> Default Response
+##### <a id="get-srce-pckg-que-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-source-packages-query-default-schema"></span> Schema
+###### <a id="getsrcepckgque-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-source-vulnerabilities"></span> get source vulnerabilities (*GetSourceVulnerabilities*)
+### <a id="gsv"></a> get source vulnerabilities (*GetSourceVulnerabilities*)
 
-```
-GET /api/sources/{IDorRepoorSha}/vulnerabilitites
+```console
+GET /api/sources/{IDorRepoorSha}/vulnerabilities
 ```
 
-#### Parameters
+#### <a id='parameters-gsv'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | IDorRepoorSha | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gsv'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
-| [200](#get-source-vulnerabilities-200) | OK | Vulnerability |  | [schema](#get-source-vulnerabilities-200-schema) |
-| [default](#get-source-vulnerabilities-default) | | ErrorMessage |  | [schema](#get-source-vulnerabilities-default-schema) |
+| [200](#get-srce-vul-200) | OK | Vulnerability |  | [schema](#get-srce-vul-200-schema) |
+| [default](#get-srce-vul-def) | | ErrorMessage |  | [schema](#get-srce-vul-def-schema) |
 
-#### Responses
+#### <a id='responses-gsv'></a>Responses
 
 
-##### <span id="get-source-vulnerabilities-200"></span> 200 - Vulnerability
+##### <a id="get-srce-vul-200"></a> 200 - Vulnerability
 Status: OK
 
-###### <span id="get-source-vulnerabilities-200-schema"></span> Schema
-   
-  
+###### <a id="get-srce-vul-200-schema"></a> Schema
+
+
 
 [][Vulnerability](#vulnerability)
 
-##### <span id="get-source-vulnerabilities-default"></span> Default Response
+##### <a id="get-srce-vul-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-source-vulnerabilities-default-schema"></span> Schema
+###### <a id="get-srce-vul-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-source-vulnerabilities-query"></span> List vulnerabilities of the given source. (*GetSourceVulnerabilitiesQuery*)
+### <a id="gsvq"></a> List vulnerabilities of the given source. (*GetSourceVulnerabilitiesQuery*)
 
-```
-GET /api/sources/vulnerabilitites
+```console
+GET /api/sources/vulnerabilities
 ```
 
-#### Parameters
+#### <a id='parameters-gsvq'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
@@ -559,36 +565,36 @@ GET /api/sources/vulnerabilitites
 | repo | `query` | string | `string` |  |  |  |  |
 | sha | `query` | string | `string` |  |  |  |  |
 
-#### All responses
+#### <a id='all-responses-gsvq'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
 | [200](#get-source-vulnerabilities-query-200) | OK | Vulnerability |  | [schema](#get-source-vulnerabilities-query-200-schema) |
 | [default](#get-source-vulnerabilities-query-default) | | ErrorMessage |  | [schema](#get-source-vulnerabilities-query-default-schema) |
 
-#### Responses
+#### <a id='responses-gsvq'></a>Responses
 
 
-##### <span id="get-source-vulnerabilities-query-200"></span> 200 - Vulnerability
+##### <a id="get-srce-vul-query-200"></a> 200 - Vulnerability
 Status: OK
 
-###### <span id="get-source-vulnerabilities-query-200-schema"></span> Schema
-   
-  
+###### <a id="getsrcevulque-200-schema"></a> Schema
+
+
 
 [][Vulnerability](#vulnerability)
 
-##### <span id="get-source-vulnerabilities-query-default"></span> Default Response
+##### <a id="get-srce-vul-que-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-source-vulnerabilities-query-default-schema"></span> Schema
+###### <a id="getsrcevulque-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-sourcs"></span> Search for sources by ID, repository, commit sha and/or organization. (*GetSourcs*)
+### <a id="get-sourcs"></a> Search for sources by ID, repository, commit sha and/or organization. (*GetSourcs*)
 
-```
+```console
 GET /api/sources
 ```
 
@@ -601,196 +607,225 @@ GET /api/sources
 #### Responses
 
 
-##### <span id="get-sourcs-200"></span> 200 - Source
+##### <a id="get-sourcs-200"></a> 200 - Source
 Status: OK
 
-###### <span id="get-sourcs-200-schema"></span> Schema
-   
-  
+###### <a id="get-sourcs-200-schema"></a> Schema
+
+
 
 [][Source](#source)
 
-##### <span id="get-sourcs-default"></span> Default Response
+##### <a id="get-sourcs-default"></a> Default Response
 ErrorMessage
 
-###### <span id="get-sourcs-default-schema"></span> Schema
+###### <a id="get-sourcs-default-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-vulnerabilities"></span> Search for vulnerabilities by CVE id. (*GetVulnerabilities*)
+### <a id="gv"></a> Search for vulnerabilities by CVE id. (*GetVulnerabilities*)
 
-```
+```console
 GET /api/vulnerabilities
 ```
 
-#### Parameters
+#### <a id='parameters-gv'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | CVEID | `query` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gv'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
 | [200](#get-vulnerabilities-200) | OK | Vulnerability |  | [schema](#get-vulnerabilities-200-schema) |
 | [default](#get-vulnerabilities-default) | | ErrorMessage |  | [schema](#get-vulnerabilities-default-schema) |
 
-#### Responses
+#### <a id='responses-gv'></a>Responses
 
 
-##### <span id="get-vulnerabilities-200"></span> 200 - Vulnerability
+##### <a id="get-vul-200"></a> 200 - Vulnerability
 Status: OK
 
-###### <span id="get-vulnerabilities-200-schema"></span> Schema
-   
-  
+###### <a id="get-vul-200-schema"></a> Schema
+
+
 
 [][Vulnerability](#vulnerability)
 
-##### <span id="get-vulnerabilities-default"></span> Default Response
+##### <a id="get-vul-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-vulnerabilities-default-schema"></span> Schema
+###### <a id="get-vul-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-vulnerability-images"></span> List the images that contain the given vulnerability. (*GetVulnerabilityImages*)
+### <a id="gvi"></a> List the images that contain the given vulnerability. (*GetVulnerabilityImages*)
 
-```
+```console
 GET /api/vulnerabilities/{CVEID}/images
 ```
 
-#### Parameters
+#### <a id='parameters-gvi'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | CVEID | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gvi'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
 | [200](#get-vulnerability-images-200) | OK | Image |  | [schema](#get-vulnerability-images-200-schema) |
 | [default](#get-vulnerability-images-default) | | ErrorMessage |  | [schema](#get-vulnerability-images-default-schema) |
 
-#### Responses
+#### <a id='responses-gvi'></a>Responses
 
 
-##### <span id="get-vulnerability-images-200"></span> 200 - Image
+##### <a id="get-vul-images-200"></a> 200 - Image
 Status: OK
 
-###### <span id="get-vulnerability-images-200-schema"></span> Schema
-   
-  
+###### <a id="get-vul-images-200-schema"></a> Schema
+
+
 
 [][Image](#image)
 
-##### <span id="get-vulnerability-images-default"></span> Default Response
+##### <a id="get-vul-images-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-vulnerability-images-default-schema"></span> Schema
+###### <a id="get-vul-images-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-vulnerability-packages"></span> List packages that contain the given CVE id. (*GetVulnerabilityPackages*)
+### <a id="gvp"></a> List packages that contain the given CVE id. (*GetVulnerabilityPackages*)
 
-```
+```console
 GET /api/vulnerabilities/{CVEID}/packages
 ```
 
-#### Parameters
+#### <a id='parameters-gvp'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | CVEID | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gvp'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
 | [200](#get-vulnerability-packages-200) | OK | Package |  | [schema](#get-vulnerability-packages-200-schema) |
 | [default](#get-vulnerability-packages-default) | | ErrorMessage |  | [schema](#get-vulnerability-packages-default-schema) |
 
-#### Responses
+#### <a id='responses-gvp'></a>Responses
 
 
-##### <span id="get-vulnerability-packages-200"></span> 200 - Package
+##### <a id="get-vul-pckg-200"></a> 200 - Package
 Status: OK
 
-###### <span id="get-vulnerability-packages-200-schema"></span> Schema
-   
-  
+###### <a id="get-vul-pckg-200-schema"></a> Schema
+
+
 
 [][Package](#package)
 
-##### <span id="get-vulnerability-packages-default"></span> Default Response
+##### <a id="get-vul-pckg-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-vulnerability-packages-default-schema"></span> Schema
+###### <a id="get-vul-pckg-def-schema"></a> Schema
 
-  
+
 
 [ErrorMessage](#error-message)
 
-### <span id="get-vulnerability-sources"></span> List sources that contain the given vulnerability. (*GetVulnerabilitySources*)
+### <a id="gvs"></a> List sources that contain the given vulnerability. (*GetVulnerabilitySources*)
 
-```
-GET /api/vulnerabiltities/{CVEID}/sources
+```console
+GET /api/vulnerabilities/{CVEID}/sources
 ```
 
-#### Parameters
+#### <a id='parameters-gvs'></a>Parameters
 
 | Name | Source | Type | Go type | Separator | Required | Default | Description |
 |------|--------|------|---------|-----------| :------: |---------|-------------|
 | CVEID | `path` | string | `string` |  | ✓ |  |  |
 
-#### All responses
+#### <a id='all-responses-gvs'></a>All responses
 | Code | Status | Description | Has headers | Schema |
 |------|--------|-------------|:-----------:|--------|
 | [200](#get-vulnerability-sources-200) | OK | Source |  | [schema](#get-vulnerability-sources-200-schema) |
 | [default](#get-vulnerability-sources-default) | | ErrorMessage |  | [schema](#get-vulnerability-sources-default-schema) |
 
-#### Responses
+#### <a id='responses-gvs'></a>Responses
 
 
-##### <span id="get-vulnerability-sources-200"></span> 200 - Source
+##### <a id="get-vul-srce-200"></a> 200 - Source
 Status: OK
 
-###### <span id="get-vulnerability-sources-200-schema"></span> Schema
-   
-  
+###### <a id="get-vul-srce-200-schema"></a> Schema
+
+
 
 [][Source](#source)
 
-##### <span id="get-vulnerability-sources-default"></span> Default Response
+##### <a id="get-vul-srce-def"></a> Default Response
 ErrorMessage
 
-###### <span id="get-vulnerability-sources-default-schema"></span> Schema
+###### <a id="get-vul-srce-def-schema"></a> Schema
 
-  
+
+
+[ErrorMessage](#error-message)
+
+### <a id="health-check"></a> health check (*HealthCheck*)
+
+```console
+GET /api/health
+```
+
+#### <a id='all-responses-hc'></a>All responses
+| Code | Status | Description | Has headers | Schema |
+|------|--------|-------------|:-----------:|--------|
+| [200](#health-check-200) | OK |  |  | [schema](#health-check-200-schema) |
+| [default](#health-check-default) | | ErrorMessage |  | [schema](#health-check-default-schema) |
+
+#### <a id='parameters-hc'></a>Responses
+
+
+##### <a id="hlth-chck-200"></a> 200
+Status: OK
+
+###### <a id="hlth-chck-200-schema"></a> Schema
+
+##### <a id="hlth-chck-def"></a> Default Response
+ErrorMessage
+
+###### <a id="hlth-chck-def-schema"></a> Schema
+
+
 
 [ErrorMessage](#error-message)
 
 ## Models
 
-### <span id="deleted-at"></span> DeletedAt
+### <a id="deleted-at"></a> DeletedAt
 
 
-  
+
 
 
 * composed type [NullTime](#null-time)
 
-### <span id="error-message"></span> ErrorMessage
+### <a id="error-message"></a> ErrorMessage
 
 
 > ErrorMessage wraps an error message in a struct so responses are properly
 marshalled as a JSON object.
-  
+
 
 
 
@@ -804,10 +839,10 @@ marshalled as a JSON object.
 
 
 
-### <span id="image"></span> Image
+### <a id="image"></a> Image
 
 
-  
+
 
 
 
@@ -824,10 +859,10 @@ marshalled as a JSON object.
 
 
 
-### <span id="method-type"></span> MethodType
+### <a id="method-type"></a> MethodType
 
 
-  
+
 
 
 
@@ -844,15 +879,15 @@ marshalled as a JSON object.
 
 
 
-### <span id="model"></span> Model
+### <a id="model"></a> Model
 
 
 > Model a basic GoLang struct which includes the following fields: ID, CreatedAt, UpdatedAt, DeletedAt
-It may be embedded into your model or you may build your own model without it
+It may be embedded into your model, or you may build your model without it
 type User struct {
 gorm.Model
 }
-  
+
 
 
 
@@ -869,12 +904,11 @@ gorm.Model
 
 
 
-### <span id="null-time"></span> NullTime
+### <a id="null-time"></a> NullTime
 
 
-> NullTime implements the Scanner interface so
-it can be used as a scan destination, similar to NullString.
-  
+> NullTime implements the Scanner interface to be used as a scan destination, similar to NullString.
+
 
 
 
@@ -889,10 +923,10 @@ it can be used as a scan destination, similar to NullString.
 
 
 
-### <span id="package"></span> Package
+### <a id="package"></a> Package
 
 
-  
+
 
 
 
@@ -911,10 +945,10 @@ it can be used as a scan destination, similar to NullString.
 
 
 
-### <span id="rating"></span> Rating
+### <a id="rating"></a> Rating
 
 
-  
+
 
 
 
@@ -931,10 +965,10 @@ it can be used as a scan destination, similar to NullString.
 
 
 
-### <span id="source"></span> Source
+### <a id="source"></a> Source
 
 
-  
+
 
 
 
@@ -953,17 +987,17 @@ it can be used as a scan destination, similar to NullString.
 
 
 
-### <span id="string-array"></span> StringArray
+### <a id="string-array"></a> StringArray
 
 
-  
+
 
 []string
 
-### <span id="vulnerability"></span> Vulnerability
+### <a id="vulnerability"></a> Vulnerability
 
 
-  
+
 
 
 
@@ -979,5 +1013,3 @@ it can be used as a scan destination, similar to NullString.
 | Ratings | [][Rating](#rating)| `[]*Rating` |  | |  |  |
 | References | [StringArray](#string-array)| `StringArray` |  | |  |  |
 | URL | string| `string` |  | |  |  |
-
-

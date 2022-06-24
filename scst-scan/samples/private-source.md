@@ -1,7 +1,9 @@
-# Running a Sample Private Source Scan
+# Sample private source scan
 
-## Define the Resources
-Create `private-source-example.yaml` and ensure you enter a valid private ssh key value in the secret:
+## <a id="define-resources"></a>Define the resources
+
+Create `sample-private-source-scan.yaml` and ensure you enter a valid private SSH key value in the secret:
+
 ```yaml
 ---
 apiVersion: v1
@@ -10,51 +12,57 @@ metadata:
   name: secret-ssh-auth
 type: kubernetes.io/ssh-auth
 stringData:
-  ssh-privatekey: # insert your PEM-encoded ssh private key
+  ssh-privatekey: <insert your PEM-encoded ssh private key>
 
 ---
-apiVersion: scanning.apps.tanzu.vmware.com/v1alpha1
+apiVersion: scanning.apps.tanzu.vmware.com/v1beta1
 kind: SourceScan
 metadata:
-  name: private-source-example
+  name: sample-private-source-scan
 spec:
   git:
-    url: "gitlab.eng.vmware.com:vulnerability-scanning-enablement/private-test-target.git"
-    revision: ""
-    # ssh-keyscan $HOST
+    url: <git clone via ssh>
+    revision: <branch, tag or commit digest>
     knownHosts: |
-      gitlab.eng.vmware.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIW3CobFtjtaGAbNvW1w7Z1+nOV131I2GQ4T/v6elt8caUxo+NK8w4R0ywLc5FiIa3RQ6CuyHfkO6cnJGQm3n3Q=
-      gitlab.eng.vmware.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4784G+YRcwc+pK2pmPJdADBmU0ji10OQu80mbwmNUxneeSuMFq95YyX31d+yfbRBp1JMlf9nunZ66ijUf9lH4nLlDxmzZC8ZZOV/vF7b6+MR8MjU2IucryDEfbHwIvemKv3miva297Ilbb4dIOOK2OmzZWG5VHUW5UCA2ELDn/DDGzgq1Jns5f8jIR/KIr7FJfKysohGMgSAFBTLEUSl25rRYQxppmhpYhaamk0d3jJfbXDAVXp1CMgb5GFWUGA2e7YGXUNxbqTLvGqbRXYKTxnBBnmZMAByGNMMCtXLKkdZdPuWyI3b7zKH8nKXVLvmdwAJuqHgF1L6I2WcMw17j
-      gitlab.eng.vmware.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCmpTsIB79xM9b3a3gDRk8zgdkOkoSJeiDYUzG+TWTt
+      <known host>
+      <another host etc>
   scanTemplate: private-source-scan-template
 ```
 
-## (Optional) Setup a Watch
-Before deploying, set up a watch in another terminal to see things process... it will be quick!
-```bash
+## <a id="set-up-watch"></a>(Optional) Set up a watch
+
+Before deploying, set up a watch in another terminal to see things process, which will be quick:
+
+```console
 watch kubectl get scantemplates,scanpolicies,sourcescans,imagescans,pods,jobs
 ```
 
-For more information, refer to [Observing and Troubleshooting](../observing.md).
+For more information, see [Observing and Troubleshooting](../observing.md).
 
-## Deploy the Resources
-```bash
-kubectl apply -f private-source-example.yaml
+## <a id="deploy-resources"></a>Deploy the resources
+
+```console
+kubectl apply -f sample-private-source-scan.yaml
 ```
 
-## See the Scan Status
-Once the scan has completed, perform:
-```bash
-kubectl describe sourcescan private-source-example
-```
-and notice the `Status.Conditions` includes a `Reason: JobFinished` and `Message: The scan job finished`.
+## <a id="view-scan-status"></a>View the scan status
 
-For more information, refer to [Viewing and Understanding Scan Status Conditions](../results.md).
+Once the scan has completed, run:
 
-## Clean Up
-```bash
-kubectl delete -f private-source-example.yaml
+```console
+kubectl describe sourcescan sample-private-source-scan
 ```
 
-## Viewing Vulnerability Reports
-See [Viewing Vulnerability Reports](../viewing-reports.md) section
+Notice the `Status.Conditions` includes a `Reason: JobFinished` and `Message: The scan job finished`.
+
+For more information, see [Viewing and Understanding Scan Status Conditions](../results.md).
+
+## <a id="clean-up"></a>Clean up
+
+```console
+kubectl delete -f sample-private-source-scan.yaml
+```
+
+## <a id="view-vuln-reports"></a>View vulnerability reports
+
+After completing the scans, [query the Supply Chain Security Tools - Store](../../cli-plugins/insight/query-data.md) to view your vulnerability results.

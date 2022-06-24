@@ -1,70 +1,88 @@
-# <a id='overview'></a> About Tanzu Application Platform v0.2 (Beta-2)
+# Tanzu Application Platform v1.2
 
 ## <a id='overview'></a> Overview of Tanzu Application Platform
 
-<p class="note warning">
-<strong>Warning:</strong> Tanzu Application Platform is currently in beta and is intended for evaluation and test purposes.
-</p>
+VMware Tanzu Application Platform is an application development platform with a rich set
+of developer tools. It offers developers a paved path to production to build and deploy software quickly and
+securely on any compliant public cloud or on-premises Kubernetes cluster.
 
-Tanzu Application Platform is a packaged set of components that helps
-developers and operators to more easily build, deploy, and manage apps
-on a Kubernetes platform.
+Tanzu Application Platform:
 
-Tanzu Application Platform simplifies workflows in both the
-_inner loop_ and _outer loop_ of Kubernetes-based app development:
+- Delivers a superior developer experience for enterprises building and deploying cloud-native applications on Kubernetes.
+- Allows developers to quickly build and test applications regardless of their familiarity with Kubernetes.
+- Helps application teams get to production faster by automating source-to-production pipelines.
+- Clearly defines the roles of developers and operators so they can work collaboratively and integrate their efforts.
 
-* **Inner Loop**: The _inner loop_ describes a developer’s personal
-development cycle to quickly iterate on code. The activities that take
-place in the inner loop include coding, testing, and debugging until
-they are happy with their code changes and finally make a commit. Rinse and repeat.
+Operations teams can create application scaffolding templates with built-in security and compliance
+guardrails, making those considerations mostly invisible to developers. Starting with the templates,
+developers turn source code into a container and get a URL to test their app in minutes.
 
-* **Outer Loop**: The _outer loop_ describes the steps to deploy apps
-to production and maintain them over time. For example, on a cloud-native
-platform, the outer loop includes activities such as building container
-images, adding container security, and configuring continuous integration
-(CI) and continuous delivery (CD) pipelines.
+After the container is built, it updates every time there’s a new code commit
+or dependency patch. An internal API management portal facilitates connecting to other applications and data, regardless of how they’re built or the infrastructure they run on.
 
-On a cloud-native or Kubernetes platform, developers often spend additional
-time in the inner loop to build container images as well as connect their
-app to all necessary services, apps, or APIs to deploy it to
-a development environment.
+## <a id='simplified-workflows'></a> Simplified workflows
 
-Outer loop activities can also be more difficult for operators in a
-Kubernetes-based development environment because of the need to construct
-an app delivery platform from various third-party and open source
-components, each with numerous configuration options.
+When creating supply chains, you can simplify workflows in both the inner loop and outer loop of Kubernetes-based app
+development with Tanzu Application Platform.
 
-Tanzu Application Platform provides a default set of components that automate
-the steps required to push an app to staging and production
-on Kubernetes. It also allows operators to customize the platform as
-needed by replacing Tanzu Application Platform components with existing
-or preferred products.
+![Illustration of TAP conceptual value, starting with components that serve the developer and finishing with the components that serve the operations staff and security staff.](images/tap-conceptual-value.png)
 
-This reduces the complexity of deploying apps on Kubernetes
-by enabling operators to better automate and standardize the outer loop,
-while allowing developers more time to focus on code.
+- **Inner Loop**:
+    - The inner loop describes a developer’s development cycle of iterating on code.
+    - Inner loop activities include coding, testing, and debugging before making a commit.
+    - On cloud-native or Kubernetes platforms, developers in the inner loop often build container images and connect their apps to all necessary services and APIs to deploy them to a development environment.
 
-## Packages in Tanzu Application Platform v0.2
+- **Outer Loop**:
+    - The outer loop describes how operators deploy apps to production and maintain them over time.
+    - On a cloud-native platform, outer loop activities include building container images, adding container security, and configuring continuous integration and continuous delivery (CI/CD)  pipelines.
+    - Outer loop activities are challenging in a Kubernetes-based development environment due to app delivery platforms being constructed from various third-party and open source components with numerous configuration options.
 
-The following packages are available in Tanzu Application Platform:
+- **Supply Chains and choreography**:
+    - Tanzu Application Platform uses the choreography pattern inherited from the context of microservices[^1] and applies it to continuous integration and continuous deployment (CI/CD) to create a path to production.[^2]
 
-* API portal
-* Application Accelerator for VMware Tanzu
-* Application Live View for VMware Tanzu
-* Cloud Native Runtimes for VMware Tanzu
-* Convention Service for VMware Tanzu
-* Default Supply Chain
-* Default Supply Chain with Testing
-* Developer Conventions 
-* SCP Toolkit
-* Service Bindings for Kubernetes
-* Supply Chain Choreographer for VMware Tanzu
-* Supply Chain Security Tools - Scan
-* Supply Chain Security Tools - Sign
-* Supply Chain Security Tools - Store
-* Tanzu Source Controller
-* VMware Tanzu Build Service
+[^1]: https://stackoverflow.com/questions/4127241/orchestration-vs-choreography
+[^2]: https://tanzu.vmware.com/developer/guides/supply-chain-choreography/
 
-## <a id='install'></a> About Installing Tanzu Application Platform v0.2 (Beta-2) Components
+Supply chains provide a way of codifying all of the steps of your path to production, or what is more commonly known as CI/CD. A supply chain differs from CI/CD in that with a supply chain, you can add any and every step necessary for an application to reach production or a lower environment.
 
-To install the Tanzu Application Platform repo bundle, see [Installing Tanzu Application Platform](install-intro.md).
+![Diagram depicting a simple path to production: CI to Security Scan to Build Image to Image Scan to CAB Approval to Deployment.](images/path-to-production.png)
+
+In order to address the developer experience gap, the path to production allows users to create a
+unified access point for all of the tools required for their applications to reach a customer-facing
+environment.
+
+Instead of having four tools that are loosely coupled to each other, a path to production defines
+all four tools in a single, unified layer of abstraction. Where tools typically can't integrate with
+one another and additional scripting or webhooks are necessary, a unified automation tool codifies
+all the interactions between each of the tools.
+
+Tanzu Application Platform provides a default set of components that automates pushing an app to
+staging and production on Kubernetes, removing the pain points for both inner and outer loops.
+It also allows operators to customize the platform by replacing Tanzu Application Platform components with other products.
+
+![Diagram depicting the layered structure of TAP](images/tap-layered-capabilities.png)
+
+For more information about Tanzu Application Platform components, see [About Tanzu Application Platform package and profiles](about-package-profiles.md).
+
+## <a id='telemetry-notice'></a> Notice of telemetry collection for Tanzu Application Platform
+
+[//]: # (This following text came from legal. Do not edit it.)
+
+Tanzu Application Platform participates in the VMware Customer Experience Improvement Program (CEIP).
+As part of CEIP, VMware collects technical information about your organization’s use of VMware
+products and services in association with your organization’s VMware license keys.
+For information about CEIP, see the [Trust & Assurance Center](http://www.vmware.com/trustvmware/ceip.html).
+You may join or leave CEIP at any time.
+The CEIP Standard Participation Level provides VMware with information to improve its products and
+services, identify and fix problems, and advise you on how to best deploy and use VMware products.
+For example, this information can enable a proactive product deployment discussion with your VMware
+account team or VMware support team to help resolve your issues.
+This information cannot directly identify any individual.
+
+[//]: # (The text above came from legal. Do not edit it.)
+
+You must acknowledge that you have read the VMware CEIP policy before you can proceed with the
+installation.
+For more information, see [Install your Tanzu Application Platform profile](install.md#install-profile).
+To opt out of telemetry participation after installation, see
+[Opting out of telemetry collection](opting-out-telemetry.md).

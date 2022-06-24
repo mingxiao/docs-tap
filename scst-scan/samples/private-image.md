@@ -1,8 +1,11 @@
-# Running a Sample Private Image Scan
-This example will perform a scan against a private image of `spring-petclinic` located in the `dev.registry.pivotal.io` registry. The image is publicly available at [Docker Hub](https://hub.docker.com/r/arey/springboot-petclinic/) should you need to upload it to a private registry you have access to.
+# Sample private image scan
 
-## Define the Resources
-Create `private-image-example.yaml` and ensure you enter a valid docker config.json value in the secret:
+This example performs a scan against an image located in a private registry.
+
+## <a id="define-resources"></a>Define the resources
+
+Create `sample-private-image-scan.yaml` and ensure you enter a valid docker config.json value in the secret:
+
 ```yaml
 ---
 apiVersion: v1
@@ -11,45 +14,53 @@ metadata:
   name: image-secret
 type: kubernetes.io/dockerconfigjson
 data:
-  .dockerconfigjson: # ~/.docker/config.json base64 data
+  .dockerconfigjson: <~/.docker/config.json base64 data>
 
 ---
-apiVersion: scanning.apps.tanzu.vmware.com/v1alpha1
+apiVersion: scanning.apps.tanzu.vmware.com/v1beta1
 kind: ImageScan
 metadata:
-  name: private-image-example
+  name: sample-image-source-scan
 spec:
   registry:
-    image: "dev.registry.pivotal.io/vse-dev/spring-petclinic@sha256:128e38c1d3f10401a595c253743bee343967c81e8f22b94e30b2ab8292b3973f"
+    image: <url of an image in a private registry>
   scanTemplate: private-image-scan-template
 ```
 
-## (Optional) Setup a Watch
-Before deploying, set up a watch in another terminal to see things process... it will be quick!
-```bash
+## <a id="set-up-watch"></a>(Optional) Set up a watch
+
+Before deploying, set up a watch in another terminal to see things process:
+
+```console
 watch kubectl get scantemplates,scanpolicies,sourcescans,imagescans,pods,jobs
 ```
 
-For more information, refer to [Observing and Troubleshooting](../observing.md).
+For more information, see [Observing and Troubleshooting](../observing.md).
 
-## Deploy the Resources
-```bash
-kubectl apply -f private-image-example.yaml
+## <a id="deploy-resources"></a>Deploy the resources
+
+```console
+kubectl apply -f sample-private-image-scan.yaml
 ```
 
-## See the Scan Status
-Once the scan has completed, perform:
-```bash
-kubectl describe imagescan private-image-example
-```
-and notice the `Status.Conditions` includes a `Reason: JobFinished` and `Message: The scan job finished`.
+## <a id="view-scan-results"></a>View the scan results
 
-For more information, refer to [Viewing and Understanding Scan Status Conditions](../results.md).
+When the scan completes, run:
 
-## Clean Up
-```bash
-kubectl delete -f private-image-example.yaml
+```console
+kubectl describe imagescan sample-image-source-scan
 ```
 
-## Viewing Vulnerability Reports
-See [Viewing Vulnerability Reports](../viewing-reports.md) section
+Notice the `Status.Conditions` includes a `Reason: JobFinished` and `Message: The scan job finished`.
+
+For more information, see [Viewing and Understanding Scan Status Conditions](../results.md).
+
+## <a id="clean-up"></a>Clean up
+
+```console
+kubectl delete -f sample-private-image-scan.yaml
+```
+
+## <a id="view-vuln-reports"></a>View vulnerability reports
+
+After completing the scans, [query the Supply Chain Security Tools - Store](../../cli-plugins/insight/query-data.md) to view your vulnerability results.
